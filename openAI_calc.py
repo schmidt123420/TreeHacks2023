@@ -75,7 +75,7 @@ def harder_problem_prompt(problem, scale):
 #         animal.capitalize()
 #     )
 
-process_file()
+# process_file()
 
 
 
