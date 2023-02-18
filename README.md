@@ -15,7 +15,7 @@ This is an example pet name generator app used in the OpenAI API [quickstart tut
 3. Navigate into the project directory
 
    ```bash
-   $ cd openai-quickstart-python
+   $ cd TreeHacks2023
    ```
 
 4. Create a new virtual environment
