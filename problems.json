@@ -1,0 +1,89 @@
+{
+    "problems": [
+        {
+            "problem": "What is the sine of 30 degrees?",
+            "solution": "0.5",
+            "class_average": 85
+        },
+        {
+            "problem": "What is the cosine of 60 degrees?",
+            "solution": "0.5",
+            "class_average": 80
+        },
+        {
+            "problem": "What is the tangent of 45 degrees?",
+            "solution": "1",
+            "class_average": 90
+        },
+        {
+            "problem": "What is the cosecant of 60 degrees?",
+            "solution": "2",
+            "class_average": 75
+        },
+        {
+            "problem": "What is the secant of 30 degrees?",
+            "solution": "2",
+            "class_average": 70
+        },
+        {
+            "problem": "What is the cotangent of 30 degrees?",
+            "solution": "1.732",
+            "class_average": 85
+        },
+        {
+            "problem": "What is the value of sin(π/2)?",
+            "solution": "1",
+            "class_average": 95
+        },
+        {
+            "problem": "What is the value of cos(π)?",
+            "solution": "-1",
+            "class_average": 80
+        },
+        {
+            "problem": "What is the value of tan(π/4)?",
+            "solution": "1",
+            "class_average": 90
+        },
+        {
+            "problem": "What is the value of csc(π/3)?",
+            "solution": "2",
+            "class_average": 75
+        },
+        {
+            "problem": "What is the value of sec(5π/6)?",
+            "solution": "2",
+            "class_average": 70
+        },
+        {
+            "problem": "What is the value of cot(π/6)?",
+            "solution": "1.732",
+            "class_average": 85
+        },
+        {
+            "problem": "Find the length of the hypotenuse of a right triangle with legs of length 3 and 4.",
+            "solution": "5",
+            "class_average": 88
+        },
+        {
+            "problem": "Find the length of the opposite side of a right triangle with hypotenuse of length 10 and adjacent side of length 6.",
+            "solution": "8",
+            "class_average": 75
+        },
+        {
+            "problem": "Find the value of the angle opposite the side of length 6 in a right triangle with hypotenuse of length 10 and adjacent side of length 8.",
+            "solution": "53.13",
+            "class_average": 68
+        },
+        {
+            "problem": "Find the value of the angle opposite the side of length 4 in a right triangle with legs of length 3 and 4.",
+            "solution": "53.13",
+            "class_average": 82
+        },
+        {
+            "problem": "Find the value of the angle opposite the side of length 8 in a right triangle with hypotenuse of length 10 and adjacent side of length 6.",
+            "solution": "36.87",
+            "class_average": 70
+        }
+    ]
+ }
