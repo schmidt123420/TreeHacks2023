@@ -10,14 +10,14 @@
 
 <body>
   <img src="{{ url_for('static', filename='dog.png') }}" class="icon" />
-  <h3>Name my pet</h3>
+  <h3>Normalize Tests</h3>
   <form action="/" method="post">
-    <input type="text" name="num_problems" placeholder="Enter number of problems" required />
-    <input type="text" name="problems" placeholder="Enter the problems in json format" required />
-    <input type="text" name="class_avg" placeholder="Enter class average" required />
-    <input type="text" name="desired_avg" placeholder="Enter desired class average" required />
-    <input type="text" name="threshold" placeholder="Threshold when you want class average to change" required />
-    <input type="submit" value="Generate names" /> 
+    <!-- <input type="text" name="num_problems" placeholder="Enter number of problems" required /> -->
+    <input type="file" id="myFile" name="problems">
+    <!-- <input type="text" name="problems" placeholder="Enter the problems in json format" required /> -->
+    <input type="number" name="desired_avg" placeholder="Desired question average" required />
+    <input type="number" name="threshold" placeholder="Threshold for question average" required />
+    <input type="submit" value="Review Questions" /> 
   </form>
   {% if result %}
   <div class="result">{{ result }}</div>
