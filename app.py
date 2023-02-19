@@ -29,6 +29,7 @@ def index():
 def generate_prompt(problems, desired_avg, threshold):
     file = open('problems.json')
     data = json.load(file)
+    problems = [] #list to hold new problems and old problems not modified
 
     def easier_problem_prompt(problem, scale):
         return f"Can you make this question: {problem}, easier by a factor of {scale}? Only respond with the easier question"
@@ -42,12 +43,13 @@ def generate_prompt(problems, desired_avg, threshold):
         diff_actual_desired = problem['question_average'] - desired_avg
         #if difference between average and desired average lesss than threshold, do nothing
         if abs(diff_actual_desired) < threshold:
-            print('do nothing')
+            # print('do nothing')
+            problems.append(problem['problem'])
         #if class average is too low, reduce difficulty of problem
         elif diff_actual_desired < 0:
             scale = diff_actual_desired/100 * (10 - 1)
-            print(f"decreasing difficulty by factor of {scale}")
-            print(f"Old problem: {problem['problem']}")
+            # print(f"decreasing difficulty by factor of {scale}")
+            # print(f"Old problem: {problem['problem']}")
             response = openai.Completion.create(
                 model="text-davinci-003",
                 prompt=easier_problem_prompt(problem['problem'], scale),
@@ -55,26 +57,30 @@ def generate_prompt(problems, desired_avg, threshold):
                 max_tokens=30
             )
             # print(f"Response: {response}")
-            new_problem = response.choices[0].text.strip
-            print(f"New problem: {new_problem}")
+            new_problem = response.choices[0].text.strip()
+            # print(f"New problem: {new_problem}")
+            problems.append(new_problem)
 
         #if class average is too high, increase difficulty of problem
         elif diff_actual_desired >= 0:
             scale = diff_actual_desired/100 * (10 - 1)
-            print(f"increasing difficulty by factor of {scale}")
-            print(f"Old problem: {problem['problem']}")
+            # print(f"increasing difficulty by factor of {scale}")
+            # print(f"Old problem: {problem['problem']}")
             response = openai.Completion.create(
                 model="text-davinci-003",
                 prompt=harder_problem_prompt(problem['problem'], scale),
                 temperature=0.5,
                 max_tokens=30
             )
-            print(f"Response: {response}")
+            # print(f"Response: {response}")
             print()
             # print(f"CHOICES TEXT: {response.choices[0].text}")
             new_problem = response.choices[0].text.strip()
-            print(f"New problem: {new_problem}")
+            # print(f"New problem: {new_problem}")
+            problems.append(new_problem)
         else:
             print("something has gone wrong :(")
         
         file.close()
+    print(problems)
+    return problems
