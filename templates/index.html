@@ -14,12 +14,16 @@
   <form action="/" method="post">
     <!-- <input type="text" name="num_problems" placeholder="Enter number of problems" required /> -->
     <input type="file" id="myFile" name="problems">
+    <br>
     <!-- <input type="text" name="problems" placeholder="Enter the problems in json format" required /> -->
     <input type="number" name="desired_avg" placeholder="Desired question average" required />
+    <br>
     <input type="number" name="threshold" placeholder="Threshold for question average" required />
+    <br>
     <input type="submit" value="Review Questions" /> 
   </form>
-  <!-- {% if result %}
-  <div class="result">{{ result }}</div>
-  {% endif %} -->
+  {% if result %}
+  <br>
+  <a href="static/GFG.pdf" download="myfile.pdf">Download</a>
+  {% endif %}
 </body>

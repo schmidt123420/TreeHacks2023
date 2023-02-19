@@ -1,14 +1,14 @@
 import os
 import json
+import re
 
 import openai
 from flask import Flask, redirect, render_template, request, url_for
+from flask import send_file
 from fpdf import FPDF
-from ocr_pro import ocr_core
 
 app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
-
 
 @app.route("/", methods=("GET", "POST"))
 def index():
@@ -17,11 +17,11 @@ def index():
         problems = request.form["problems"]
         desired_avg = int(request.form["desired_avg"])
         threshold = int(request.form["threshold"])
-        response = generate_prompt(problems, desired_avg, threshold),
-        pdf = output_file(response)
+        response = generate_prompt(problems, desired_avg, threshold)
+        output_file(response)
+        # print(response)
         
-        # return redirect(url_for("index", result=response.choices[0].text))
-        return redirect(url_for("index"))
+        return redirect(url_for("index", result = True))
 
 
     result = request.args.get("result")
@@ -56,11 +56,11 @@ def generate_prompt(problems, desired_avg, threshold):
                 model="text-davinci-003",
                 prompt=easier_problem_prompt(problem['problem'], scale),
                 temperature=0.5,
-                max_tokens=30
+                max_tokens=1000
             )
             # print(f"Response: {response}")
             new_problem = response.choices[0].text.strip()
-            # print(f"New problem: {new_problem}")
+            print(f"New problem: {new_problem}")
             problems.append(new_problem)
 
         #if class average is too high, increase difficulty of problem
@@ -72,12 +72,12 @@ def generate_prompt(problems, desired_avg, threshold):
                 model="text-davinci-003",
                 prompt=harder_problem_prompt(problem['problem'], scale),
                 temperature=0.5,
-                max_tokens=30
+                max_tokens=1000
             )
             # print(f"Response: {response}")
             # print(f"CHOICES TEXT: {response.choices[0].text}")
             new_problem = response.choices[0].text.strip()
-            # print(f"New problem: {new_problem}")
+            print(f"New problem: {new_problem}")
             problems.append(new_problem)
         else:
             print("something has gone wrong :(")
@@ -92,15 +92,25 @@ def output_file(problem_list):
     
     # set style and size of font
     # that you want in the pdf
-    pdf.set_font("Arial", size = 15)
+    pdf.add_font('DejaVu', '', 'DejaVuSansCondensed.ttf', uni=True)
+    pdf.set_font('DejaVu', '', 15)
     
     # create a cell
     pdf.cell(200, 10, txt = "Output File",
             ln = 1, align = 'C')
     
     # add another cell
-    pdf.cell(200, 10, txt = "Whatever Title You Want",
+    pdf.cell(200, 10, txt = "Math Exam!",
             ln = 2, align = 'C')
+
+    pdf.set_font("DejaVu", size = 10)
+
+    for question in problem_list:
+        pdf.multi_cell(180, 10, txt = question, align = 'L')
+
+        pdf.cell(180, 40, txt = "",
+        ln = 1, align = 'L')
+
     
     # save the pdf with name .pdf
-    pdf.output("GFG.pdf") 
+    pdf.output("static/GFG.pdf") 
