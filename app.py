@@ -4,6 +4,7 @@ import json
 import openai
 from flask import Flask, redirect, render_template, request, url_for
 from fpdf import FPDF
+from ocr_pro import ocr_core
 
 app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
