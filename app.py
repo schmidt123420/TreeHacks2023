@@ -3,6 +3,7 @@ import json
 
 import openai
 from flask import Flask, redirect, render_template, request, url_for
+from fpdf import FPDF
 
 app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -15,12 +16,12 @@ def index():
         problems = request.form["problems"]
         desired_avg = int(request.form["desired_avg"])
         threshold = int(request.form["threshold"])
-        response = openai.Completion.create(
-            model="text-davinci-003",
-            prompt=generate_prompt(problems, desired_avg, threshold),
-            temperature=0.6,
-        )
-        return redirect(url_for("index", result=response.choices[0].text))
+        response = generate_prompt(problems, desired_avg, threshold),
+        pdf = output_file(response)
+        
+        # return redirect(url_for("index", result=response.choices[0].text))
+        return redirect(url_for("index"))
+
 
     result = request.args.get("result")
     return render_template("index.html", result=result)
@@ -73,7 +74,6 @@ def generate_prompt(problems, desired_avg, threshold):
                 max_tokens=30
             )
             # print(f"Response: {response}")
-            print()
             # print(f"CHOICES TEXT: {response.choices[0].text}")
             new_problem = response.choices[0].text.strip()
             # print(f"New problem: {new_problem}")
@@ -82,5 +82,24 @@ def generate_prompt(problems, desired_avg, threshold):
             print("something has gone wrong :(")
         
         file.close()
-    print(problems)
     return problems
+
+def output_file(problem_list):
+    pdf = FPDF()
+    # Add a page
+    pdf.add_page()
+    
+    # set style and size of font
+    # that you want in the pdf
+    pdf.set_font("Arial", size = 15)
+    
+    # create a cell
+    pdf.cell(200, 10, txt = "Output File",
+            ln = 1, align = 'C')
+    
+    # add another cell
+    pdf.cell(200, 10, txt = "Whatever Title You Want",
+            ln = 2, align = 'C')
+    
+    # save the pdf with name .pdf
+    pdf.output("GFG.pdf") 
