@@ -16,7 +16,11 @@ def index():
         # num_problems = request.form["num_problems"]
         problems = request.form["problems"]
         desired_avg = int(request.form["desired_avg"])
+        num_questions = (request.form["num-questions"])
+        question_averages = (request.form.getlist("question_averages")) #in a list format [avg_1, avg_2]
+        question_averages = [eval(i) for i in question_averages]
         threshold = int(request.form["threshold"])
+
         response = generate_prompt(problems, desired_avg, threshold)
         output_file(response)
         # print(response)
