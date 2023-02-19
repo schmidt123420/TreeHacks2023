@@ -1,6 +1,37 @@
 <!DOCTYPE html>
 <head>
   <title>OpenAI Quickstart</title>
+  <script type="text/javascript">
+    function generateFields() {
+      // Get the value of the "number of questions" input field
+      var numQuestions = document.getElementById("num-questions").value;
+
+      // Get the div where the input fields will be added
+      var fieldsDiv = document.getElementById("fields");
+
+      // Remove any previously generated fields
+      while (fieldsDiv.firstChild) {
+        fieldsDiv.removeChild(fieldsDiv.firstChild);
+      }
+
+      // Generate the specified number of input fields
+      for (var i = 1; i <= numQuestions; i++) {
+        // Create a new input element and set its type to "text"
+        var input = document.createElement("input");
+        input.type = "number";
+        input.name = "question_averages";
+        input.style.width = "312px";
+        input.placeholder ="Class average for question " + i;
+
+        // Add the input element to the fields div
+        fieldsDiv.appendChild(input);
+
+        // Add a line break after each input field
+        fieldsDiv.appendChild(document.createElement("br"));
+        fieldsDiv.appendChild(document.createElement("br"));
+      }
+    }
+  </script>
   <link
     rel="shortcut icon"
     href="{{ url_for('static', filename='dog.png') }}"
@@ -12,10 +43,13 @@
   <img src="{{ url_for('static', filename='dog.png') }}" class="icon" />
   <h3>Normalize Tests</h3>
   <form action="/" method="post">
-    <!-- <input type="text" name="num_problems" placeholder="Enter number of problems" required /> -->
     <input type="file" id="myFile" name="problems">
     <br>
-    <!-- <input type="text" name="problems" placeholder="Enter the problems in json format" required /> -->
+    <input type="number" id="num-questions" name="num-questions" placeholder="Number of questions" min="1" max="10" onchange="generateFields()" required/>
+    <br>
+    <div id="fields">
+      <!-- Input fields will be added here -->
+    </div>
     <input type="number" name="desired_avg" placeholder="Desired question average" required />
     <br>
     <input type="number" name="threshold" placeholder="Threshold for question average" required />
